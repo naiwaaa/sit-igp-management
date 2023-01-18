@@ -1,0 +1,36 @@
+{
+  "name": "sit-igp-management",
+  "version": "0.0.0",
+  "private": true,
+  "license": "gpl-3.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "find . -type d \\( -name .turbo -o -name .next -o -name build -o -name dist -o -name out -o -name coverage \\) -exec rm -rf {} +",
+    "deploy:api": "npm run clean && ./scripts/deploy-api.sh",
+    "deploy:web": "npm run clean && ./scripts/deploy-web.sh",
+    "dev": "turbo run dev --parallel",
+    "format": "prettier --write --ignore-unknown .",
+    "lint": "turbo run lint",
+    "prepare": "husky install",
+    "test": "turbo run test"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.3",
+    "prettier-plugin-jsdoc": "^0.4.2",
+    "prettier-plugin-packagejson": "^2.4.0",
+    "turbo": "^1.7.0"
+  },
+  "packageManager": "npm@8.3.2",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

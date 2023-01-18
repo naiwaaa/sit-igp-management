@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    ".next",
+    ".turbo",
+    "**/*spec.ts"
+  ],
+  "compilerOptions": {
+    "sourceMap": false
+  }
+}

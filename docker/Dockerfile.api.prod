@@ -1,0 +1,45 @@
+# Build the app
+FROM node:16-alpine AS builder
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /app
+
+COPY ./json/ .
+COPY ./package-lock.json ./package-lock.json
+RUN npm install
+
+COPY ./full/ .
+RUN npx turbo run build --filter=@sit-igp/api --include-dependencies --no-deps
+
+# Install dependencies
+FROM node:16-alpine AS installer
+
+WORKDIR /app
+ENV NODE_ENV production
+
+COPY ./json/ .
+COPY ./package-lock.json ./package-lock.json
+RUN npm ci --omit=dev --ignore-scripts
+
+# Production image
+FROM node:16-alpine AS api-runner
+
+LABEL fly_launch_runtime="nodejs"
+
+WORKDIR /app
+
+ENV NODE_ENV production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nestjs
+
+USER nestjs
+
+COPY --from=builder --chown=nestjs:nodejs /app/apps/api/package*.json ./apps/api/
+COPY --from=builder --chown=nestjs:nodejs /app/apps/api/dist ./apps/api/dist
+COPY --from=builder --chown=nestjs:nodejs /app/package*.json ./
+COPY --from=builder --chown=nestjs:nodejs /app/packages ./packages
+
+COPY --from=installer --chown=nestjs:nodejs /app/node_modules/ ./node_modules/
+
+CMD [ "node", "apps/api/dist/src/main.js" ]

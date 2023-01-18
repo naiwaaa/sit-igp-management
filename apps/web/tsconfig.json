@@ -1,0 +1,12 @@
+{
+  "extends": "@sit-igp/tsconfig/nextjs.json",
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", "build", "coverage", ".next", ".turbo"],
+  "compilerOptions": {
+    // Modules
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}

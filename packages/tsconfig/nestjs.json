@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+
+  "display": "NestJS",
+  "extends": "./base.json",
+
+  "compilerOptions": {
+    // Modules
+    "module": "CommonJS",
+
+    // Language and Environment
+    "lib": ["ESNext", "ESNext.AsyncIterable"],
+    "target": "ES2021"
+  }
+}

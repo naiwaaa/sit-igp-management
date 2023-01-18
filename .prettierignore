@@ -1,0 +1,19 @@
+# Ignore turborepo cache
+**/.turbo
+
+# Ignore artifacts
+**/.next
+**/build
+**/dist
+**/coverage
+
+# Ignore files for PNPM, NPM and YARN
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# default
+**/.git
+**/.svn
+**/.hg
+**/node_modules
